@@ -1,8 +1,9 @@
-name: Deploy to GitHub Pages
+name: Deploy React Vite App to GitHub Pages
 
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -19,19 +20,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
+
+      - name: Show Node and npm versions
+        run: |
+          node -v
+          npm -v
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build
+      - name: Build project
         run: npm run build
 
       - name: Upload GitHub Pages artifact
