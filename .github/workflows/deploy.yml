@@ -26,16 +26,20 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
+          node-version: 20.12.2
 
       - name: Show Node and npm versions
         run: |
           node -v
           npm -v
 
+      - name: Clean npm cache and lockfile
+        run: |
+          npm cache clean --force
+          rm -f package-lock.json
+
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps --no-audit --no-fund
 
       - name: Build project
         run: npm run build
